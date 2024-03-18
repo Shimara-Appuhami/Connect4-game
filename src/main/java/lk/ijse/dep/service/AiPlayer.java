@@ -10,6 +10,7 @@ public class AiPlayer extends Player {
     }
 
     //movePiece method eka Override karanawa
+    //add test commit
     @Override
     public void movePiece(int col) {
         //minimax algorithm eka use karala best move eka hoya gatha
