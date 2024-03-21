@@ -5,11 +5,11 @@ public class BoardImpl implements Board {
     private final BoardUI boardUI;
 
     public BoardImpl(BoardUI boardUI) {
-        pieces = new Piece[NUM_OF_COLS][NUM_OF_ROWS];
+        pieces = new Piece[NUM_OF_COLS][NUM_OF_ROWS];//array eka piece ekata assign kala
         this.boardUI = boardUI;
 
-        for (int i = 0; i < NUM_OF_COLS; i++) {
-            for (int j = 0; j < NUM_OF_ROWS; j++) {     //set EMPTY values
+        for (int i = 0; i < NUM_OF_COLS; i++) {//mulu board ekama empty karanwa
+            for (int j = 0; j < NUM_OF_ROWS; j++) {
                 pieces[i][j] = Piece.EMPTY;
             }
         }
@@ -26,7 +26,7 @@ public class BoardImpl implements Board {
     @Override
     public int findNextAvailableSpot(int col) {
         for (int i = 0; i < NUM_OF_ROWS; i++) {
-            if (pieces[col][i] == Piece.EMPTY) {
+            if (pieces[col][i] == Piece.EMPTY) {//col i empty da kiyala balanwa 2 emptyda balanaw empty nam return kanwa nathnam -1 return karanwa
                 return i;       //available
             }
         }
@@ -41,7 +41,7 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isLegalMove(int col) {
-        if (findNextAvailableSpot(col) != -1) {
+        if (findNextAvailableSpot(col) != -1) {//spot eka -1 nemeda kiyala banawa ehema nathnam
             return true;        //if column is available
         } else {
             return false;       //if column is full
@@ -60,7 +60,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public boolean existLegalMoves() {
+    public boolean existLegalMoves() {//legal move ekakda kiyala balanawa
         for (int col = 0; col < NUM_OF_COLS; col++) {
             if (isLegalMove(col)) {
                 return true; //if legal move
@@ -76,11 +76,11 @@ public class BoardImpl implements Board {
 
     @Override
     public void updateMove(int col, Piece move) {
-        pieces[col][findNextAvailableSpot(col)] = move;   //  method should update the board by putting the piece  whose turn it is in the first free row of the specified column.
+        pieces[col][findNextAvailableSpot(col)] = move;   //array ekata col,spot ekai da gannawa assign karagannawa move eka
     }
 
     @Override
-    public void updateMove(int col, int row, Piece move) {  //minimax
+    public void updateMove(int col, int row, Piece move) {
 
         pieces[col][row] = move;
     }
@@ -93,10 +93,10 @@ public class BoardImpl implements Board {
             int rowloop = findNextAvailableSpot(col) == -1 ? NUM_OF_ROWS : findNextAvailableSpot(col);
             rowcount = 0;
             for (int row = 1; row < rowloop; row++) {
-                if (pieces[col][row].equals(pieces[col][row - 1])) {
+                if (pieces[col][row].equals(pieces[col][row - 1])) {//danata thiyana row ekata kalin ekata samanada balanawa
                     rowcount++;
                     if (rowcount == 3) {
-                        return new Winner(pieces[col][row], col, row - 3, col, row);    //connect 4 pieces vertically
+                        return new Winner(pieces[col][row], col, row - 3, col, row);
                     }
                 } else {
                     rowcount = 0;
@@ -110,7 +110,7 @@ public class BoardImpl implements Board {
                 if (pieces[col][row] == pieces[col - 1][row]) {
                     count++;
                     if (count == 4) {
-                        return new Winner(pieces[col][row], col - 3, row, col, row);    //connect 4 pieces horizontally
+                        return new Winner(pieces[col][row], col - 3, row, col, row);
                     }
                 } else {
                     count = 1;
@@ -118,7 +118,7 @@ public class BoardImpl implements Board {
             }
         }
 
-        return new Winner(Piece.EMPTY);
+        return new Winner(Piece.EMPTY);//winner kenek nathnam empty karanwa
     }
 
     @Override
